@@ -9,26 +9,25 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class RESTExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<EmployeeErrorResponse> handleException(EmployeeNotFoundException exc) {
-        EmployeeErrorResponse response = new EmployeeErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), System.currentTimeMillis());
+    public ResponseEntity<ErrorResponse> handleException(EmployeeNotFoundException exc) {
+        ErrorResponse response = new ErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), System.currentTimeMillis());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<OfficeErrorResponse> handleException(OfficeNotFoundException exc) {
-        OfficeErrorResponse response = new OfficeErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), System.currentTimeMillis());
+    public ResponseEntity<ErrorResponse> handleException(OfficeNotFoundException exc) {
+        ErrorResponse response = new ErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), System.currentTimeMillis());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<AdminErrorResponse> handleException(Exception exc) {
-        AdminErrorResponse response = new AdminErrorResponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage(), System.currentTimeMillis());
+    public ResponseEntity<ErrorResponse> handleException(Exception exc) { ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage(), System.currentTimeMillis());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public ResponseEntity<FeederErrorResponse> handleException(FeederNotFoundException exc) {
-        FeederErrorResponse response  = new FeederErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), System.currentTimeMillis());
+    public ResponseEntity<ErrorResponse> handleException(FeederNotFoundException exc) {
+        ErrorResponse response  = new ErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), System.currentTimeMillis());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 

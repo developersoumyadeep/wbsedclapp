@@ -1,14 +1,14 @@
 package com.falconworks.wbsedclapp.exceptions;
 
-public class FeederErrorResponse {
+public class ErrorResponse {
     private int status;
     private String message;
     private long timestamp;
 
-    public FeederErrorResponse() {
+    public ErrorResponse() {
     }
 
-    public FeederErrorResponse(int status, String message, long timestamp) {
+    public ErrorResponse(int status, String message, long timestamp) {
         this.status = status;
         this.message = message;
         this.timestamp = timestamp;
