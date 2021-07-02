@@ -2,6 +2,7 @@ package com.falconworks.wbsedclapp.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -21,7 +22,12 @@ public class RESTExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(Exception exc) { ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage(), System.currentTimeMillis());
+    public ResponseEntity<ErrorResponse> handleException(Exception exc) {
+        ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage(), System.currentTimeMillis());
+        if (exc instanceof AccessDeniedException) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        }
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 

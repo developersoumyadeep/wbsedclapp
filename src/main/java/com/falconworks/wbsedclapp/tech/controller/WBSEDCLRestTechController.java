@@ -34,7 +34,7 @@ public class WBSEDCLRestTechController {
 		if (!officeCode.endsWith("000")) {
 			return feederService.findFeedersBySubStationOfficeCode(officeCode);
 		} else {
-			return feederService.findFeedersByDivisionOfficeCode(officeCode.substring(0, 4)+"%");
+			return feederService.findFeedersByDivisionOfficeCode(officeCode.substring(0, 4));
 		}
 	}
 
