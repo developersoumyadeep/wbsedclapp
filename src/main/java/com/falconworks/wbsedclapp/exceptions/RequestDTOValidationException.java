@@ -1,6 +1,6 @@
 package com.falconworks.wbsedclapp.exceptions;
 
-public class RequestDTOValidationException extends Exception {
+public class RequestDTOValidationException extends RuntimeException {
     public RequestDTOValidationException() {
     }
 

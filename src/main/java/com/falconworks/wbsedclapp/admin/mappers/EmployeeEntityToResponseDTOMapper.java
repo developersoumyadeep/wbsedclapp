@@ -1,6 +1,6 @@
 package com.falconworks.wbsedclapp.admin.mappers;
 
-import com.falconworks.wbsedclapp.admin.dto.responses.EmployeeResponseDTO;
+import com.falconworks.wbsedclapp.admin.dto.responses.EmployeeDetailedResponseDTO;
 import com.falconworks.wbsedclapp.admin.entities.Employee;
 
 public class EmployeeEntityToResponseDTOMapper {
@@ -8,8 +8,8 @@ public class EmployeeEntityToResponseDTOMapper {
 
     }
 
-    public EmployeeResponseDTO map(Employee employee) {
-        EmployeeResponseDTO dto = new EmployeeResponseDTO();
+    public static EmployeeDetailedResponseDTO map(Employee employee) {
+        EmployeeDetailedResponseDTO dto = new EmployeeDetailedResponseDTO();
         dto.setUsername(employee.getUsername());
         dto.setMobile(employee.getMobile());
         dto.setEmail(employee.getEmail());

@@ -1,25 +1,57 @@
 package com.falconworks.wbsedclapp.admin.dto.requests;
 
+import com.falconworks.wbsedclapp.admin.validation.NonExistingUsername;
+import com.falconworks.wbsedclapp.admin.validation.OfficeCodeExists;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
 public class EmployeeRequestDTO {
+    @NotNull(message="username must not be null")
+    @Pattern(regexp = "[0-9]{8}", message = "Username must be 8 digits long")
+    @NonExistingUsername
     private String username;
+    @NotNull(message="password must not be null")
+    @Size(min = 3, message="password must be at least three characters long")
     private String password;
+    @NotNull(message="mobile no. must not be null")
+    @Pattern(regexp = "[0-9]{10}", message="Invalid mobile no.")
     private String mobile;
+    @Email(message="Invalid email address")
     private String email;
+    @NotNull(message = "First name must not be null")
+    @Size(min = 3, message = "First name must be at least 3 characters long ")
     private String firstName;
     private String lastName;
+    @NotNull(message = "Designation must not be null")
     private String designation;
+    @NotNull(message = "Employee type must not be null")
     private String employeeType;
+    @NotNull(message = "Address Line1 must not be null")
+    @Size(min=3, message = "Invalid address line1")
     private String addressLine1;
     private String addressLine2;
+    @NotNull(message = "District must not be null")
+    @Size(min=3, message = "Invalid district ")
     private String district;
+    @NotNull(message = "Pin code must not be null")
+    @Pattern(regexp = "[0-9]{6}", message = "Pin code must be six digits long")
     private String pinCode;
+    @NotNull(message="Joining date must not be null")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate joiningDate;
+    @NotNull(message = "Retirement date must not be null")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate retirementDate;
+    @NotNull(message="Employee office code must not be null")
+    @Pattern(regexp="[0-9]{7}",message="Invalid office code")
+    @OfficeCodeExists
     private String officeCode;
+    @NotNull(message="Uninitialized authorization list")
     private List<String> authorizations;
+    @NotNull(message="Enabled status cannot be null")
     private boolean isEnabled;
 
     public EmployeeRequestDTO() {

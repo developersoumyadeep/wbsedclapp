@@ -1,19 +1,27 @@
 package com.falconworks.wbsedclapp.admin.dto.requests;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class OfficeRequestDTO {
 
     @NotNull(message="Office Code cannot be null")
+    @Pattern(regexp="[0-9]{7}",message="Office code must be 7 digit long")
     private String officeCode;
     @NotNull(message="Office Location cannot be null")
+    @Size(min=10, message="Office location must be at least 10 characters long")
     private String officeLocation;
+    @Pattern(regexp="[0-9]{7}",message="Invalid office code")
     private String parentOfficeCode;
+    @NotNull(message = "Address Line1 must not be null")
+    @Size(min=3, message = "Invalid address line1")
     private String addressLine1;
     private String addressLine2;
     @NotNull(message="District cannot be null")
     private String district;
     @NotNull(message="Pin code cannot be null")
+    @Pattern(regexp = "[0-9]{6}", message = "Pin code must be six digits long")
     private String pinCode;
 
     public OfficeRequestDTO() {

@@ -2,7 +2,7 @@ package com.falconworks.wbsedclapp.admin.dto.responses;
 
 import java.time.LocalDate;
 
-public class EmployeeResponseDTO {
+public class EmployeeDetailedResponseDTO {
     private String username;
     private String mobile;
     private String email;
@@ -18,10 +18,10 @@ public class EmployeeResponseDTO {
     private LocalDate retirementDate;
     private String officeCode;
 
-    public EmployeeResponseDTO() {
+    public EmployeeDetailedResponseDTO() {
     }
 
-    public EmployeeResponseDTO(String username, String mobile, String email, String firstName, String lastName, String designation, String employeeType, String addressLine1, String addressLine2, String district, String pinCode, LocalDate joiningDate, LocalDate retirementDate, String officeCode) {
+    public EmployeeDetailedResponseDTO(String username, String mobile, String email, String firstName, String lastName, String designation, String employeeType, String addressLine1, String addressLine2, String district, String pinCode, LocalDate joiningDate, LocalDate retirementDate, String officeCode) {
         this.username = username;
         this.mobile = mobile;
         this.email = email;

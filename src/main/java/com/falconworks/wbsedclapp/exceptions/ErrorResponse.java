@@ -1,16 +1,19 @@
 package com.falconworks.wbsedclapp.exceptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ErrorResponse {
     private int status;
-    private String message;
+    private List<String> messages = new ArrayList<>();
     private long timestamp;
 
     public ErrorResponse() {
     }
 
-    public ErrorResponse(int status, String message, long timestamp) {
+    public ErrorResponse(int status, List<String> messages, long timestamp) {
         this.status = status;
-        this.message = message;
+        this.messages = messages;
         this.timestamp = timestamp;
     }
 
@@ -22,12 +25,12 @@ public class ErrorResponse {
         this.status = status;
     }
 
-    public String getMessage() {
-        return message;
+    public List<String> getMessages() {
+        return messages;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessage(List<String> messages) {
+        this.messages = messages;
     }
 
     public long getTimestamp() {
