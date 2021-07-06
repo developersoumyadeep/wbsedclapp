@@ -1,12 +1,11 @@
 package com.falconworks.wbsedclapp.tech.services;
 
-import java.util.List;
-
+import com.falconworks.wbsedclapp.tech.entities.Feeder;
+import com.falconworks.wbsedclapp.tech.repositories.FeederRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.falconworks.wbsedclapp.tech.repositories.FeederRepository;
-import com.falconworks.wbsedclapp.tech.entities.Feeder;
+import java.util.List;
 
 @Service
 public class FeederServiceImpl implements FeederService {
@@ -29,8 +28,8 @@ public class FeederServiceImpl implements FeederService {
 	}
 
 	@Override
-	public void saveFeeder(Feeder feeder) {
-		feederRepository.save(feeder);
+	public Feeder saveFeeder(Feeder feeder) {
+		return feederRepository.save(feeder);
 	}
 
 	@Override

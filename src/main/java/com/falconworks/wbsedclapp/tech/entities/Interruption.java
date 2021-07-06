@@ -1,15 +1,9 @@
 package com.falconworks.wbsedclapp.tech.entities;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "interruption")
@@ -36,13 +30,15 @@ public class Interruption {
 	private LocalTime toHrs;
 	@Column(name = "timestamp", columnDefinition = "TIMESTAMP")
 	private LocalDateTime timestamp;
+	@Column(name="created_by")
+	private String createdBy;
 
 	public Interruption() {
 
 	}
 
 	public Interruption(String faultPointCode, String interruptionType, String cause,String faultNature, LocalDate fromDate,
-			LocalTime fromHrs, LocalDate toDate, LocalTime toHrs, LocalDateTime timestamp) {
+			LocalTime fromHrs, LocalDate toDate, LocalTime toHrs, LocalDateTime timestamp, String createdBy) {
 		super();
 		this.faultPointCode = faultPointCode;
 		this.interruptionType = interruptionType;
@@ -53,6 +49,7 @@ public class Interruption {
 		this.toDate = toDate;
 		this.toHrs = toHrs;
 		this.timestamp = timestamp;
+		this.createdBy = createdBy;
 	}
 
 	public int getId() {
@@ -135,11 +132,28 @@ public class Interruption {
 		this.timestamp = timestamp;
 	}
 
-	@Override
-	public String toString() {
-		return "Interruption [id=" + id + ", faultPointCode=" + faultPointCode + ", interruptionType="
-				+ interruptionType + ", cause=" + cause + ", fromDate=" + fromDate + ", fromHrs=" + fromHrs
-				+ ", toDate=" + toDate + ", toHrs=" + toHrs + ", timestamp=" + timestamp + "]";
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	@Override
+	public String toString() {
+		return "Interruption{" +
+				"id=" + id +
+				", faultPointCode='" + faultPointCode + '\'' +
+				", interruptionType='" + interruptionType + '\'' +
+				", faultNature='" + faultNature + '\'' +
+				", cause='" + cause + '\'' +
+				", fromDate=" + fromDate +
+				", fromHrs=" + fromHrs +
+				", toDate=" + toDate +
+				", toHrs=" + toHrs +
+				", timestamp=" + timestamp +
+				", createdBy='" + createdBy + '\'' +
+				'}';
+	}
 }

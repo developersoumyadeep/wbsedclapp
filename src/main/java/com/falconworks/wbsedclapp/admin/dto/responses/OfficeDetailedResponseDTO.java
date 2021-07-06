@@ -1,11 +1,10 @@
 package com.falconworks.wbsedclapp.admin.dto.responses;
 
-import com.falconworks.wbsedclapp.admin.entities.Office;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class OfficeDetailedResponseDTO {
+    private int id;
     private String officeCode;
     private String officeLocation;
     private String parentOfficeCode;
@@ -19,7 +18,8 @@ public class OfficeDetailedResponseDTO {
     public OfficeDetailedResponseDTO() {
     }
 
-    public OfficeDetailedResponseDTO(String officeCode, String officeLocation, String parentOfficeCode, String addressLine1, String addressLine2, String district, String pinCode, List<String> subOfficeCodes, List<String> employeeUsernames) {
+    public OfficeDetailedResponseDTO(int id, String officeCode, String officeLocation, String parentOfficeCode, String addressLine1, String addressLine2, String district, String pinCode, List<String> subOfficeCodes, List<String> employeeUsernames) {
+        this.id = id;
         this.officeCode = officeCode;
         this.officeLocation = officeLocation;
         this.parentOfficeCode = parentOfficeCode;
@@ -29,6 +29,14 @@ public class OfficeDetailedResponseDTO {
         this.pinCode = pinCode;
         this.subOfficeCodes = subOfficeCodes;
         this.employeeUsernames = employeeUsernames;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getOfficeCode() {
