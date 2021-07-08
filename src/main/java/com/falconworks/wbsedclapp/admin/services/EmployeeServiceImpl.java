@@ -48,5 +48,4 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee getEmployeeByUsername(String username) {
 		return employeeRepository.findByUsername(username);
 	}
-
 }

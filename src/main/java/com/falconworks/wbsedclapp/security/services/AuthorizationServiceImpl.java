@@ -16,15 +16,35 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 	}
 
 	@Override
-	public boolean hasPermission(String officeCode, String username) {
+	public boolean hasPermission(String officeCode, String username, Authorization authorization) {
 		User user = userRepository.findByUsername(username);
-		String divCode = officeCode.substring(0,4);
 		if (!(user instanceof Employee)) {
 			return false;
-		} else 
+		} else {
+			Employee emp = (Employee)user;
+			if (emp.getAuthorizations().contains(Authorization.SUPERUSER)) {
+				return true;
+			} else {
+				boolean employeeIsAttachedToDivisionOffice = emp.getOffice().getOfficeCode().endsWith("000");
+				if (employeeIsAttachedToDivisionOffice) {
+					String divCode = officeCode.substring(0,4);
+					return emp.getOffice().getOfficeCode().substring(0, 4).equals(divCode) && emp.getAuthorizations().contains(authorization);
+				} else {
+					return emp.getOffice().getOfficeCode().equals(officeCode) && emp.getAuthorizations().contains(authorization);
+				}
+			}
+		}
+	}
+
+	@Override
+	public boolean hasPermission(String username, Authorization authorization) {
+		User user = userRepository.findByUsername(username);
+		if (!(user instanceof Employee)) {
+			return false;
+		} else
 		{
 			Employee emp = (Employee)user;
-			return emp.getOffice().getOfficeCode().substring(0, 4).equals(divCode);
+			return emp.getAuthorizations().contains(authorization);
 		}
 	}
 }

@@ -1,17 +1,19 @@
 package com.falconworks.wbsedclapp.admin.dto.requests;
 
-import com.falconworks.wbsedclapp.admin.validation.NonExistingUsername;
 import com.falconworks.wbsedclapp.admin.validation.OfficeCodeExists;
+import com.falconworks.wbsedclapp.security.services.Authorization;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
 public class EmployeeRequestDTO {
     @NotNull(message="username must not be null")
     @Pattern(regexp = "[0-9]{8}", message = "Username must be 8 digits long")
-    @NonExistingUsername
     private String username;
     @NotNull(message="password must not be null")
     @Size(min = 3, message="password must be at least three characters long")
@@ -50,14 +52,14 @@ public class EmployeeRequestDTO {
     @OfficeCodeExists
     private String officeCode;
     @NotNull(message="Uninitialized authorization list")
-    private List<String> authorizations;
+    private List<Authorization> authorizations;
     @NotNull(message="Enabled status cannot be null")
     private boolean isEnabled;
 
     public EmployeeRequestDTO() {
     }
 
-    public EmployeeRequestDTO(String username, String password, String mobile, String email, String firstName, String lastName, String designation, String employeeType, String addressLine1, String addressLine2, String district, String pinCode, LocalDate joiningDate, LocalDate retirementDate, String officeCode, List<String> authorizations, boolean isEnabled) {
+    public EmployeeRequestDTO(String username, String password, String mobile, String email, String firstName, String lastName, String designation, String employeeType, String addressLine1, String addressLine2, String district, String pinCode, LocalDate joiningDate, LocalDate retirementDate, String officeCode, List<Authorization> authorizations, boolean isEnabled) {
         this.username = username;
         this.password = password;
         this.mobile = mobile;
@@ -197,11 +199,11 @@ public class EmployeeRequestDTO {
         this.officeCode = officeCode;
     }
 
-    public List<String> getAuthorizations() {
+    public List<Authorization> getAuthorizations() {
         return authorizations;
     }
 
-    public void setAuthorizations(List<String> authorizations) {
+    public void setAuthorizations(List<Authorization> authorizations) {
         this.authorizations = authorizations;
     }
 

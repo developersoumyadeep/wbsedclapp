@@ -15,10 +15,20 @@ public class OfficeRequestDTOtoOfficeEntityMapper {
     }
 
     public Office map(OfficeRequestDTO dto) {
-        Office office = new Office();
+        Office office = null;
         Address address = new Address(dto.getAddressLine1(), dto.getAddressLine2(), dto.getDistrict(), dto.getPinCode());
+        Office existingOffice = officeService.findByOfficeCode(dto.getOfficeCode());
+        //check if the dto is of an existing office
+        //if not, then the request is for saving a new office
+        //else, the request is for editing the existing office
+        if (existingOffice == null) {
+            office = new Office();
+            office.setOfficeCode(dto.getOfficeCode());
+        } else {
+            //this will populate the id field of the returned office
+            office = existingOffice;
+        }
         office.setAddress(address);
-        office.setOfficeCode(dto.getOfficeCode());
         office.setOfficeLocation(dto.getOfficeLocation());
         if (dto.getParentOfficeCode() != null) {
             Office parent = officeService.findByOfficeCode(dto.getParentOfficeCode());

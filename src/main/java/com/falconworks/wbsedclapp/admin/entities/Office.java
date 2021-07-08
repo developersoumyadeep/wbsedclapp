@@ -1,7 +1,5 @@
 package com.falconworks.wbsedclapp.admin.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,11 +27,9 @@ public class Office implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "parent_ofc_id")
-    @JsonIgnoreProperties({"parentOffice", "employees", "subOffices"})
     private Office parentOffice;
 
     @OneToMany(mappedBy = "parentOffice", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(ignoreUnknown = true, value = {"parentOffice"})
     private List<Office> subOffices = new ArrayList<>();
     ;
 
@@ -42,7 +38,6 @@ public class Office implements Serializable {
     private Address address;
 
     @OneToMany(mappedBy = "office")
-    @JsonIgnoreProperties({"office"})
     private List<Employee> employees = new ArrayList<>();
     ;
 

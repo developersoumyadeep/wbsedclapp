@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -50,12 +52,37 @@ public class RESTExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleException(DisabledException exc) {
+        List<String> messages = new ArrayList<>();
+        messages.add("User is disabled");
+        ErrorResponse response = new ErrorResponse(HttpStatus.FORBIDDEN.value(), messages, System.currentTimeMillis());
+        return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleException(BadCredentialsException exc) {
+        List<String> messages = new ArrayList<>();
+        messages.add("Username and Password combination is invalid");
+        ErrorResponse response = new ErrorResponse(HttpStatus.FORBIDDEN.value(), messages, System.currentTimeMillis());
+        return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleException(SavingWithExistingUsernameException exc) {
+        List<String> messages = new ArrayList<>();
+        messages.add(exc.getMessage());
+        ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), messages, System.currentTimeMillis());
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(Exception exc) {
         List<String> messages = new ArrayList<>();
-        messages.add(exc.getMessage()+" "+ Arrays.toString(exc.getStackTrace()));
+        messages.add(exc.getMessage()+":"+ Arrays.toString(exc.getStackTrace()));
         ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), messages, System.currentTimeMillis());
         if (exc instanceof AccessDeniedException) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            messages.set(0,exc.getMessage());
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);

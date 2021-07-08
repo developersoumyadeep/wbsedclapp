@@ -1,24 +1,11 @@
 package com.falconworks.wbsedclapp.admin.entities;
 
+import com.falconworks.wbsedclapp.security.services.Authorization;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="user")
@@ -47,10 +34,11 @@ public class User {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER,targetClass = Authorization.class)
+    @Enumerated(EnumType.STRING)
     @CollectionTable(name="authorization", joinColumns=@JoinColumn(name="user_id"))
     @Column(name="authorization")
-    private List<String> authorizations;
+    private List<Authorization> authorizations;
 
     @Column(name="enabled", columnDefinition = "TINYINT")
     private boolean isEnabled;
@@ -116,15 +104,15 @@ public class User {
         this.address = address;
     }
 
-    public List<String> getAuthorizations() {
+    public List<Authorization> getAuthorizations() {
         return authorizations;
     }
 
-    public void setAuthorizations(List<String> authorizations) {
+    public void setAuthorizations(List<Authorization> authorizations) {
         this.authorizations = authorizations;
     }
 
-    public void addAuthorization(String authorization) {
+    public void addAuthorization(Authorization authorization) {
         if (authorizations == null) {
             authorizations = new ArrayList<>();
         }

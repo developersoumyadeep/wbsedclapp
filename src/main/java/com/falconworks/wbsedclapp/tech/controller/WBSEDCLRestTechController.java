@@ -30,7 +30,7 @@ public class WBSEDCLRestTechController {
 	}
 
 	@GetMapping("/offices/{officeCode}/feeders")
-	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username)")
+	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username,Authorization.USER)")
 	public List<FeederResponseDTO> findAllByOfficeCode(@PathVariable String officeCode) {
 		if (!officeCode.endsWith("000")) {
 			return FeederEntityListToFeederResponseDTOListMapper.map(feederService.findFeedersBySubStationOfficeCode(officeCode));
@@ -40,27 +40,27 @@ public class WBSEDCLRestTechController {
 	}
 
 	@GetMapping("/offices/{officeCode}/feeders/{feederCode}")
-	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username)")
+	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username,Authorization.USER)")
 	public FeederResponseDTO findFeederByFeederCode(@PathVariable String officeCode,@PathVariable String feederCode) {
 		return FeederEntityToFeederResponseDTOMapper.map(feederService.findByFeederCode(feederCode));
 	}
 
 	@PostMapping("/offices/{officeCode}/feeders")
-	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username)")
+	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username,Authorization.SUPERVISOR)")
 	public FeederResponseDTO saveFeeder(@Valid @RequestBody FeederRequestDTO dto, @PathVariable String officeCode) {
-		Feeder feeder = new FeederRequestDTOtoFeederEntityMapper(officeService).map(dto);
+		Feeder feeder = new FeederRequestDTOtoFeederEntityMapper(officeService,feederService).map(dto);
 		return FeederEntityToFeederResponseDTOMapper.map(feederService.saveFeeder(feeder));
 	}
 
 	@PutMapping("/offices/{officeCode}/feeders")
-	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username)")
+	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username,Authorization.SUPERVISOR)")
 	public FeederResponseDTO updateFeeder(@Valid @RequestBody FeederRequestDTO dto, @PathVariable String officeCode) {
-		Feeder feeder = new FeederRequestDTOtoFeederEntityMapper(officeService).map(dto);
+		Feeder feeder = new FeederRequestDTOtoFeederEntityMapper(officeService,feederService).map(dto);
 		return FeederEntityToFeederResponseDTOMapper.map(feederService.updateFeeder(feeder));
 	}
 
 	@DeleteMapping("/offices/{officeCode}/feeders/{id}")
-	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username)")
+	@PreAuthorize("@authorizationServiceImpl.hasPermission(#officeCode, authentication.principal.username,Authorization.SUPERVISOR)")
 	public void deleteById(@PathVariable int id, @PathVariable String officeCode) {
 		feederService.deleteById(id);
 	}

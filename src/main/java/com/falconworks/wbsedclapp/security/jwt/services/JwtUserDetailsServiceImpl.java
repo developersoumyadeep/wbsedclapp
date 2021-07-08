@@ -2,6 +2,7 @@ package com.falconworks.wbsedclapp.security.jwt.services;
 
 import com.falconworks.wbsedclapp.admin.entities.User;
 import com.falconworks.wbsedclapp.admin.repositories.UserRepository;
+import com.falconworks.wbsedclapp.security.services.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,8 +31,8 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(username);
         if (user != null) {
             List<GrantedAuthority> authorities = new ArrayList<>();
-            for (String authorization : user.getAuthorizations()) {
-                authorities.add(new SimpleGrantedAuthority(authorization));
+            for (Authorization authorization : user.getAuthorizations()) {
+                authorities.add(new SimpleGrantedAuthority(authorization.name()));
             }
             return (UserDetails) new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
         } else {

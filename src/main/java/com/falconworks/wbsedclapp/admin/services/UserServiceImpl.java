@@ -1,8 +1,8 @@
 package com.falconworks.wbsedclapp.admin.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.falconworks.wbsedclapp.admin.entities.User;
+import com.falconworks.wbsedclapp.admin.repositories.UserRepository;
+import com.falconworks.wbsedclapp.security.services.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.falconworks.wbsedclapp.admin.repositories.UserRepository;
-import com.falconworks.wbsedclapp.admin.entities.User;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
 		User user= userRepository.findByUsername(username);
 		if (user != null && user.isEnabled()) {
 			List<GrantedAuthority> authorities = new ArrayList<>();
-			for (String authorization : user.getAuthorizations()) {
-				authorities.add(new SimpleGrantedAuthority(authorization));
+			for (Authorization authorization : user.getAuthorizations()) {
+				authorities.add(new SimpleGrantedAuthority(authorization.name()));
 			}
 			return (UserDetails) new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
 		} else {

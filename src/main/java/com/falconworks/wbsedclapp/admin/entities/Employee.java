@@ -1,20 +1,7 @@
 package com.falconworks.wbsedclapp.admin.entities;
 
+import javax.persistence.*;
 import java.time.LocalDate;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 @Entity
 @Table(name="employee")
@@ -32,20 +19,13 @@ public class Employee extends User{
     private String employeeType;
     
     @Column(name= "joining_date")
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate joiningDate;
     
     @Column(name = "date_of_retirement")
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate retirementDate;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "office_code_fk", referencedColumnName="office_code")
-    @JsonIgnoreProperties({"subOffices","employees"})
     private Office office;
 
     public Employee() {

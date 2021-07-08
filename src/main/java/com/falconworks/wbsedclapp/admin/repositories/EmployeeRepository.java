@@ -1,8 +1,7 @@
 package com.falconworks.wbsedclapp.admin.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.falconworks.wbsedclapp.admin.entities.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
@@ -11,4 +10,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
 	//using inferred query facility of spring-jpa here
 	Employee findByUsername(String username);
+	Employee findEmployeeByOffice_OfficeCodeAndUsername(String officeCode, String username);
 }

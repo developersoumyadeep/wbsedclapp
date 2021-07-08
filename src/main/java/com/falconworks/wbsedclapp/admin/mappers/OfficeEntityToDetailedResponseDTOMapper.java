@@ -15,6 +15,7 @@ public class OfficeEntityToDetailedResponseDTOMapper {
     public static OfficeDetailedResponseDTO map(Office office) {
 
         OfficeDetailedResponseDTO dto = new OfficeDetailedResponseDTO();
+        dto.setId(office.getId());
         dto.setOfficeCode(office.getOfficeCode());
         dto.setOfficeLocation(office.getOfficeLocation());
         if (office.getParentOffice() != null) {
